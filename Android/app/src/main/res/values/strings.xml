@@ -380,6 +380,7 @@
   <string name="blocked_ads_today">오늘 차단한 광고 수</string>
   <string name="status_blocked">차단됨</string>
   <string name="status_normal">정상</string>
+  <string name="status_unprotected">연결 안 됨</string>
   <string name="tile_label">YuhaDNS</string>
 
   <string name="excluded_apps"
