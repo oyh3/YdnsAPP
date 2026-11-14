@@ -25,6 +25,7 @@ import android.service.quicksettings.TileService;
 
 import androidx.annotation.RequiresApi;
 
+import app.intra.R;
 import app.intra.ui.MainActivity;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
