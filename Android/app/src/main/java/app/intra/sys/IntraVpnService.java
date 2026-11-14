@@ -421,6 +421,10 @@ public class IntraVpnService extends VpnService implements NetworkListener,
 
     getTracker().recordTransaction(this, transaction);
 
+    if (transaction.isBlock) {
+      app.intra.ui.YuhaDnsWidget.updateAllWidgets(this);
+    }
+
     Intent intent = new Intent(InternalNames.RESULT.name());
     intent.putExtra(InternalNames.TRANSACTION.name(), transaction);
     LocalBroadcastManager.getInstance(IntraVpnService.this).sendBroadcast(intent);

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="@raw/ca" />
+        </trust-anchors>
+    </base-config>
+    <domain-config>
+        <!-- Custom TLDs and Private Domains for YuhaDNS -->
+        <domain includeSubdomains="true">yuha</domain>
+        <domain includeSubdomains="true">yu</domain>
+        <domain includeSubdomains="true">comm</domain>
+        <domain includeSubdomains="true">yh</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">workers.dev</domain>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="@raw/ca" />
+        </trust-anchors>
+    </domain-config>
+</network-security-config>

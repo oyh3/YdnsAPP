@@ -340,11 +340,11 @@
   </string>
 
   <string name="server_choice_builtin" description="Label for option to select from a short list of servers. [CHAR_LIMIT=NONE]">
-    Built-in server
+    YuhaDNS 프로필 선택
   </string>
 
   <string name="server_choice_website_notice" description="Warning text about a DNS server, with a hyperlink. [CHAR_LIMIT=NONE]">
-    Please visit <a href="https://www.example.com/">their website</a> to review their privacy policy and any applicable terms of service.
+    Please visit <a href="https://dns.ohyh2016.workers.dev/">their website</a> to review their privacy policy and any applicable terms of service.
   </string>
 
   <string name="server_website_button" description="Label for a button that will open the website. [CHAR_LIMIT=NONE]">
@@ -352,30 +352,35 @@
   </string>
 
   <string name="try_all_servers" description="Label for a button to check all known servers to find one that is working. [CHAR_LIMIT=NONE]">
-    Try all built-in servers
+    모든 YuhaDNS 프로필 테스트
   </string>
 
   <string name="checking_servers" description="Text shown on a deactivated button while the checks are in progress. [CHAR_LIMIT=NONE]">
-    Checking all servers
+    프로필 속도 측정 중...
   </string>
 
   <string name="found_fastest" description="Template for success indication, shown when the fastest server for you is found. [CHAR_LIMIT=NONE]">
-    Your fastest server is <xliff:g example="Google Public DNS">%s</xliff:g>.
+    가장 빠른 프로필: <xliff:g example="초고속 모드">%s</xliff:g>
   </string>
 
   <string name="all_servers_failed" description="Notification shown briefly if all known servers were unreachable. [CHAR_LIMIT=NONE]">
-    Failed to identify a working server: connection failed to all built-in servers.
+    YuhaDNS 서버에 연결할 수 없습니다. 워커 배포 상태를 확인하세요.
   </string>
 
   <string name="server_choice_custom"
           description="Label for option to type in your own server URL">
-    Custom server URL
+    직접 입력 (Custom URL)
   </string>
 
   <string name="server_choice_warning"
           description="Warning shown if the URL is invalid or does not start with https://">
-    Custom server must be a valid https:// URL
+    유효한 YuhaDNS DoH URL(https://.../dns-query)을 입력하세요.
   </string>
+
+  <string name="blocked_ads_today">오늘 차단한 광고 수</string>
+  <string name="status_blocked">차단됨</string>
+  <string name="status_normal">정상</string>
+  <string name="tile_label">YuhaDNS</string>
 
   <string name="excluded_apps"
           description="Title of the 'Excluded apps' setting, which allows the user to select apps that will not use Intra.">

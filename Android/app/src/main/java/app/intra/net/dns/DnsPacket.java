@@ -192,6 +192,14 @@ public class DnsPacket {
     return qr;
   }
 
+  public byte getRcode() {
+    return rcode;
+  }
+
+  public boolean isNxDomain() {
+    return rcode == 3;
+  }
+
   public String getQueryName() {
     if (question.length > 0) {
       return question[0].name;

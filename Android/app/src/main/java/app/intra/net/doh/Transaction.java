@@ -47,4 +47,5 @@ public class Transaction implements Serializable {
   public byte[] response;
   public Calendar responseCalendar;
   public String serverIp;
+  public boolean isBlock = false;
 }

@@ -63,6 +63,7 @@ public class VpnController {
   private void stateChanged(Context context) {
     Intent broadcast = new Intent(InternalNames.DNS_STATUS.name());
     LocalBroadcastManager.getInstance(context).sendBroadcast(broadcast);
+    app.intra.ui.YuhaDnsWidget.updateAllWidgets(context);
   }
 
   public synchronized QueryTracker getTracker(Context context) {

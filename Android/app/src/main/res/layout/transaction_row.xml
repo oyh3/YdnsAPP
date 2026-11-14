@@ -43,6 +43,23 @@
         android:singleLine="true"
         tools:text="longlonglonglonglonglonglonglongexample.com"/>
 
+    <TextView
+        android:id="@+id/status_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:background="@drawable/badge_blocked"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:text="차단됨"
+        tools:visibility="visible"/>
+
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

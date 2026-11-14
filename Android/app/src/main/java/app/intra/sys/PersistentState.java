@@ -87,27 +87,13 @@ public class PersistentState {
     }
 
     String[] urls = context.getResources().getStringArray(R.array.urls);
-    String defaultDomain = context.getResources().getString(R.string.legacy_domain0);
-    String url = null;
-    if (domain.equals(defaultDomain)) {
-      // Common case: the domain is dns.google.com, which now corresponds to dns.google (url 0).
-      url = urls[0];
-    } else {
-      // In practice, we expect that domain will always be cloudflare-dns.com at this point, because
-      // that was the only other option in the relevant legacy versions of Intra.
-      // Look for the corresponding URL among the builtin servers.
-      for (String u : urls) {
-        Uri parsed = Uri.parse(u);
-        if (domain.equals(parsed.getHost())) {
-          url = u;
-          break;
-        }
+    String url = urls[0];
+    for (String u : urls) {
+      Uri parsed = Uri.parse(u);
+      if (domain.equals(parsed.getHost())) {
+        url = u;
+        break;
       }
-    }
-
-    if (url == null) {
-      LogWrapper.log(Log.WARN, LOG_TAG, "Legacy domain is unrecognized");
-      return;
     }
     setServerUrl(context, url);
   }
@@ -123,7 +109,13 @@ public class PersistentState {
     if (urlTemplate == null) {
       return null;
     }
-    return Untemplate.strip(urlTemplate);
+    String url = Untemplate.strip(urlTemplate);
+    // If the saved URL is an old legacy server (e.g. dns.google), reset to our default Worker URL.
+    if (url.contains("dns.google") || url.contains("cloudflare-dns.com")) {
+      setServerUrl(context, null);
+      return null;
+    }
+    return url;
   }
 
   private static String extractHost(String url) {

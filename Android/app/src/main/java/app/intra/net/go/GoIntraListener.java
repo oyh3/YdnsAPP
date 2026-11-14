@@ -151,6 +151,16 @@ public class GoIntraListener implements intra.Listener, DoHListener {
     transaction.status = goStatusMap.get(summary.getStatus());
     transaction.responseCalendar = Calendar.getInstance();
 
+    if (transaction.response != null && transaction.response.length > 0) {
+      try {
+        DnsPacket respPacket = new DnsPacket(transaction.response);
+        if (respPacket.isNxDomain()) {
+          transaction.isBlock = true;
+        }
+      } catch (ProtocolException ignored) {
+      }
+    }
+
     vpnService.recordTransaction(transaction);
   }
 }

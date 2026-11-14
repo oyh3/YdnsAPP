@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity
 
   private void updateStatsDisplay(long numRequests, Transaction transaction) {
     showNumRequests(numRequests);
+    showNumBlockedToday(VpnController.getInstance().getTracker(this).getNumBlockedToday());
     showTransaction(transaction);
   }
 
@@ -141,6 +142,16 @@ public class MainActivity extends AppCompatActivity
     }
     TextView numRequestsTextView = (TextView) controlView.findViewById(R.id.numRequests);
     numRequestsTextView.setText(String.format(Locale.getDefault(), "%,d", numRequests));
+  }
+
+  private void showNumBlockedToday(long numBlockedToday) {
+    if (controlView == null) {
+      return;
+    }
+    TextView numBlockedTextView = (TextView) controlView.findViewById(R.id.numBlockedToday);
+    if (numBlockedTextView != null) {
+      numBlockedTextView.setText(String.format(Locale.getDefault(), "%,d", numBlockedToday));
+    }
   }
 
   private void openUrl(String url) {
@@ -342,6 +353,7 @@ public class MainActivity extends AppCompatActivity
     // Restore number of requests.
     long numRequests = tracker.getNumRequests();
     showNumRequests(numRequests);
+    showNumBlockedToday(tracker.getNumBlockedToday());
 
     updateServerName();
     syncDnsStatus();

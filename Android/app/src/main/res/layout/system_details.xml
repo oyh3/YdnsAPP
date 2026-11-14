@@ -185,7 +185,7 @@
                         android:singleLine="true"
                         android:textIsSelectable="true"
                         android:focusable="false"
-                        android:text="dns.google.com"
+                        android:text="dns.ohyh2016.workers.dev"
                         tools:ignore="HardcodedText"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 

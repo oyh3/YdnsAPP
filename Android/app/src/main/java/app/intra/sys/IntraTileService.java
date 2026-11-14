@@ -32,19 +32,28 @@ public class IntraTileService extends TileService {
 
     @Override
     public void onStartListening() {
-        VpnState vpnState = VpnController.getInstance().getState(this);
+        updateTileState();
+    }
 
+    private void updateTileState() {
         Tile tile = getQsTile();
         if (tile == null) {
             return;
         }
 
+        VpnState vpnState = VpnController.getInstance().getState(this);
+        tile.setLabel(getString(R.string.tile_label));
         if (vpnState.activationRequested) {
             tile.setState(Tile.STATE_ACTIVE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                tile.setSubtitle(getString(R.string.status_protected));
+            }
         } else {
             tile.setState(Tile.STATE_INACTIVE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                tile.setSubtitle(getString(R.string.status_unprotected));
+            }
         }
-
         tile.updateTile();
     }
 
@@ -65,6 +74,8 @@ public class IntraTileService extends TileService {
                 startActivityAndCollapse(intent);
             }
         }
+
+        updateTileState();
     }
 
     @Override

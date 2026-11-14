@@ -60,7 +60,7 @@
           style="@android:style/Widget.CompoundButton.RadioButton"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="https://..."
+          android:hint="https://dns.ohyh2016.workers.dev/dns-query"
           tools:ignore="HardcodedText,Autofill"
           android:imeOptions="actionDone"
           android:inputType="textFilter|textUri"/>

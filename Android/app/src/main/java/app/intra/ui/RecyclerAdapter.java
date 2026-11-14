@@ -115,6 +115,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     // Contents of the condensed view
     private final TextView hostnameView;
+    private final TextView statusTagView;
     private final TextView timeView;
     private final TextView flagView;
     private final ToggleButton expandButton;
@@ -133,6 +134,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
       rowView = v;
 
       hostnameView = v.findViewById(R.id.hostname);
+      statusTagView = v.findViewById(R.id.status_tag);
       timeView = v.findViewById(R.id.response_time);
       flagView = v.findViewById(R.id.flag);
       expandButton = v.findViewById(R.id.expand);
@@ -175,6 +177,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
       timeView.setText(transaction.time);
       flagView.setText(transaction.flag);
 
+      if (transaction.isBlock) {
+        statusTagView.setVisibility(View.VISIBLE);
+        statusTagView.setText(R.string.status_blocked);
+        statusTagView.setBackgroundResource(R.drawable.badge_blocked);
+        timeView.setTextColor(ContextCompat.getColor(activity, R.color.accent_bad));
+      } else {
+        statusTagView.setVisibility(View.GONE);
+        timeView.setTextColor(ContextCompat.getColor(activity, R.color.accent_good));
+      }
+
       setExpanded(transaction.expanded);
     }
 
@@ -195,6 +207,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     boolean expanded = false;
 
     // Human-readable representation of this transaction.
+    final boolean isBlock;
     final String fqdn;      // Fully qualified domain name of the query
     final String hostname;  // Truncated hostname for short display
     final String time;      // The time of the response, e.g. 10:32:15
@@ -237,6 +250,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         resolver = transaction.serverIp;
       }
 
+      boolean blocked = transaction.isBlock;
       if (transaction.status == app.intra.net.doh.Transaction.Status.COMPLETE) {
         DnsPacket packet = null;
         String err = null;
@@ -246,15 +260,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
           err = e.getMessage();
         }
         if (packet != null) {
+          if (packet.isNxDomain()) {
+            blocked = true;
+          }
           List<InetAddress> addresses = packet.getResponseAddresses();
-          if (addresses.size() > 0) {
+          if (addresses.size() > 0 && !blocked) {
             InetAddress destination = addresses.get(0);
             @Nullable String countryCode = getCountryCode(destination);
             response = makeAddressPair(countryCode, destination.getHostAddress());
             flag = getFlag(countryCode);
           } else {
-            response = "NXDOMAIN";
-            flag = "\u2754";  // White question mark
+            blocked = true;
+            response = "NXDOMAIN (차단됨)";
+            flag = "\uD83D\uDEE1\uFE0F";  // Shield icon
           }
         } else {
           response = err;
@@ -268,6 +286,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
           flag = "\u26a0";  // Warning sign
         }
       }
+      isBlock = blocked;
     }
 
     private String getTypeName(int type) {

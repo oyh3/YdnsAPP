@@ -15,6 +15,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
         <activity android:name="app.intra.ui.MainActivity"
             android:exported="true">
@@ -42,7 +43,7 @@
         <service
             android:name="app.intra.sys.IntraTileService"
             android:icon="@drawable/ic_tile"
-            android:label="@string/app_name"
+            android:label="@string/tile_label"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:exported="true">
             <intent-filter>
@@ -52,6 +53,19 @@
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
         </service>
+
+        <receiver
+            android:name="app.intra.ui.YuhaDnsWidget"
+            android:label="@string/tile_label"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="app.intra.widget.ACTION_TOGGLE_VPN" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
 
         <receiver android:name="app.intra.sys.AutoStarter" android:enabled="true"
             android:exported="true">

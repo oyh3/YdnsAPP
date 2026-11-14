@@ -111,13 +111,22 @@ public class ServerChooserFragment extends PreferenceDialogFragmentCompat
         updateUI();
     }
 
-    // Check that the URL is a plausible DOH server: https with a domain, a path (at least "/"),
-    // and no query parameters or fragment.
+    // Check that the URL is a plausible Yuhadns / Worker DoH endpoint:
+    // https with a host, and a path matching the Worker's DoH endpoint (/dns-query or /dns-qury).
     private boolean checkUrl(String url) {
         try {
             URL parsed = new URL(url);
-            return parsed.getProtocol().equals("https") && !parsed.getHost().isEmpty() &&
-                !parsed.getPath().isEmpty() && parsed.getQuery() == null && parsed.getRef() == null;
+            if (!parsed.getProtocol().equalsIgnoreCase("https")) {
+                return false;
+            }
+            if (parsed.getHost().isEmpty()) {
+                return false;
+            }
+            String path = parsed.getPath();
+            if (path == null || !path.matches("^/dns-qu(e)?ry(/.*)?$")) {
+                return false;
+            }
+            return parsed.getRef() == null;
         } catch (MalformedURLException e) {
             return false;
         }

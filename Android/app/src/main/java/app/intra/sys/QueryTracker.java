@@ -20,27 +20,33 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 import app.intra.net.doh.Transaction;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Queue;
 
 /**
  * A class for tracking DNS transactions.  This class counts the number of successful transactions,
- * records the last minute of query timestamps, and optionally maintains a history of recent
- * transactions.
+ * records the last minute of query timestamps, and maintains a history of recent transactions.
+ * Also tracks the count of ads/threats blocked today (NXDOMAIN).
  * Thread-safe.
  */
 public class QueryTracker {
 
   private static final String NUM_REQUESTS = "numRequests";
+  private static final String BLOCKED_TODAY = "blockedToday";
+  private static final String BLOCKED_DATE = "blockedDate";
 
   private static final int HISTORY_SIZE = 100;
   private static final int ACTIVITY_MEMORY_MS = 60 * 1000;  // One minute
 
   private long numRequests = 0;
+  private long numBlockedToday = 0;
+  private String lastDate = "";
   private Queue<Transaction> recentTransactions = new LinkedList<>();
   private Queue<Long> recentActivity = new LinkedList<>();
-  private boolean historyEnabled = false;
+  private boolean historyEnabled = true;
 
   QueryTracker(Context context) {
     sync(context);
@@ -48,6 +54,25 @@ public class QueryTracker {
 
   public synchronized long getNumRequests() {
     return numRequests;
+  }
+
+  public synchronized long getNumBlockedToday() {
+    checkDateReset();
+    return numBlockedToday;
+  }
+
+  private void checkDateReset() {
+    String today = getTodayDateString();
+    if (!today.equals(lastDate)) {
+      lastDate = today;
+      numBlockedToday = 0;
+    }
+  }
+
+  private static String getTodayDateString() {
+    Calendar cal = Calendar.getInstance();
+    return String.format(Locale.ROOT, "%04d-%02d-%02d",
+        cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
   }
 
   public synchronized Queue<Transaction> getRecentTransactions() {
@@ -99,6 +124,12 @@ public class QueryTracker {
       }
     }
 
+    if (transaction.isBlock) {
+      checkDateReset();
+      ++numBlockedToday;
+      saveBlocked(context);
+    }
+
     recentActivity.add(transaction.queryTime);
     while (recentActivity.peek() + ACTIVITY_MEMORY_MS < transaction.queryTime) {
       recentActivity.remove();
@@ -110,6 +141,15 @@ public class QueryTracker {
         recentTransactions.remove();
       }
     }
+  }
+
+  private void saveBlocked(Context context) {
+    SharedPreferences settings =
+        context.getSharedPreferences(QueryTracker.class.getSimpleName(), MODE_PRIVATE);
+    SharedPreferences.Editor editor = settings.edit();
+    editor.putLong(BLOCKED_TODAY, numBlockedToday);
+    editor.putString(BLOCKED_DATE, lastDate);
+    editor.apply();
   }
 
   public synchronized void sync(Context context) {
@@ -124,6 +164,17 @@ public class QueryTracker {
       SharedPreferences.Editor editor = settings.edit();
       editor.putLong(NUM_REQUESTS, numRequests);
       editor.apply();
+    }
+
+    String today = getTodayDateString();
+    String storedDate = settings.getString(BLOCKED_DATE, "");
+    if (today.equals(storedDate)) {
+      numBlockedToday = settings.getLong(BLOCKED_TODAY, 0);
+      lastDate = today;
+    } else {
+      numBlockedToday = 0;
+      lastDate = today;
+      saveBlocked(context);
     }
   }
 
