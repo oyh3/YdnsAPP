@@ -27,17 +27,26 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Setup Android SDK and NDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install NDK and Build-Tools
+      - name: Accept Android SDK Licenses
         run: |
-          yes | sdkmanager --licenses
-          sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;26.1.10909125"
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-      - name: Set NDK Environment
+      - name: Setup Android NDK and SDK Tools
         run: |
-          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125" >> $GITHUB_ENV
+          # Install SDK platform 36 & build-tools 36.0.0
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" || true
+
+          # Check pre-installed NDK or install
+          if [ -d "$ANDROID_HOME/ndk" ] && [ -n "$(ls -A $ANDROID_HOME/ndk 2>/dev/null)" ]; then
+            NDK_DIR=$(ls -d $ANDROID_HOME/ndk/* | tail -n 1)
+            echo "Found preinstalled NDK: $NDK_DIR"
+          else
+            echo "Installing NDK 26.3.11579264..."
+            $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;26.3.11579264"
+            NDK_DIR="$ANDROID_HOME/ndk/26.3.11579264"
+          fi
+          echo "ANDROID_NDK_HOME=$NDK_DIR" >> $GITHUB_ENV
+          echo "Selected NDK path: $NDK_DIR"
 
       - name: Grant execute permission for gradlew
         run: chmod +x Android/gradlew
