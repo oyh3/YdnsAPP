@@ -233,16 +233,16 @@ public class MainActivity extends AppCompatActivity
           chooseView(R.id.settings);
           return true;
         } else if (itemId == R.id.support) {
-          openUrl("https://support.getintra.org/");
+          openUrl("https://dns.ohyh2016.workers.dev/");
           return true;
         } else if (itemId == R.id.privacy) {
-          openUrl("https://getintra.org/privacy");
+          openUrl("https://dns.ohyh2016.workers.dev/");
           return true;
         } else if (itemId == R.id.tos) {
-          openUrl("https://policies.google.com/terms");
+          openUrl("https://dns.ohyh2016.workers.dev/");
           return true;
         } else if (itemId == R.id.source_code) {
-          openUrl("https://github.com/Jigsaw-Code/intra");
+          openUrl("https://github.com/oyh3/YdnsAPP");
           return true;
         }
         return false;

@@ -92,7 +92,7 @@
                 android:id="@+id/nav_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/logo_backdrop"
+                android:visibility="gone"
                 tools:ignore="ContentDescription"
                 android:scaleType="fitCenter"
                 app:layout_constraintTop_toBottomOf="@id/credit_text_view"

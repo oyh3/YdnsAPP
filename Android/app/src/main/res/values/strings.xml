@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name" translatable="false">Intra</string>
+  <string name="app_name" translatable="false">YuhadnsAPP</string>
 
   <!-- Intro text -->
   <string name="intro_benefit_headline" description="Headline for intro page describing key benefit">
@@ -7,7 +7,7 @@
   </string>
 
   <string name="intro_benefit_body" description="Body text for intro page describing key benefit">
-    Intra protects you from DNS manipulation, a cyber attack used to block access to news sites, social media platforms and messaging apps.\n\nWhile Intra protects you against DNS manipulation, there are other, more complicated blocking techniques and attacks that Intra doesn\'t protect against.
+    YuhadnsAPP protects you from DNS manipulation, ads, and tracking while keeping your browsing private.\n\nYuhadnsAPP routes your DNS through your custom Cloudflare Worker DoH endpoint.
   </string>
 
   <string name="intro_manipulation_headline" description="Headline for intro page describing manipulation">
@@ -15,7 +15,7 @@
   </string>
 
   <string name="intro_manipulation_body" description="Body text for intro page describing manipulation">
-    Intra protects your connection to the Domain Name System (DNS), which provides the exact addresses you need to visit a website or open an app.\n\nIntra uses encryption to ensure that results can\’t be manipulated, helping you safely access the internet.
+    YuhadnsAPP protects your connection to the Domain Name System (DNS), which provides the exact addresses you need to visit a website or open an app.\n\nYuhadnsAPP uses encryption to ensure that results can\’t be manipulated.
   </string>
 
   <string name="intro_details_headline" description="Headline for intro page describing permissions and privacy">
@@ -23,7 +23,7 @@
   </string>
 
   <string name="intro_details_body" description="Body text for intro page describing permissions and privacy">
-    Tap OK to allow Intra to protect your DNS requests. By default, they will be routed to Google Public DNS (<a href="https://developers.google.com/speed/public-dns/privacy">Privacy Policy</a>). You can choose another service in the app settings.
+    Tap OK to allow YuhadnsAPP to protect your DNS requests. By default, they will be routed to YuhaDNS (<a href="https://dns.ohyh2016.workers.dev/">Privacy Policy</a>). You can choose another profile in the app settings.
   </string>
 
   <string name="intro_back" description="Button label to see the previous page of introduction">
@@ -79,10 +79,8 @@
     Source Code
   </string>
 
-  <string name="credits_text"
-          description="Credits to contributing parties. 'Jigsaw' and 'Intra' are not translatable.">
-    Intra was made by <a href="https://jigsaw.google.com">Jigsaw</a>. IP locations are based on data
-    from DB-IP.com.
+  <string name="credits_text">
+    YuhadnsAPP is a secure DNS-over-HTTPS client powered by YuhaDNS.
   </string>
 
   <string name="indicator_on"
@@ -133,8 +131,8 @@
 
   <string name="explanation_strict"
           description="Explanation on the main screen for users who have Private DNS strict mode enabled at the OS level.">
-    Intra has detected that the Android Private DNS setting is enabled.  This means your DNS
-    queries are already protected, so there\'s no need to enable Intra.
+    YuhadnsAPP has detected that the Android Private DNS setting is enabled. This means your DNS
+    queries are already protected, so there\'s no need to enable YuhadnsAPP.
   </string>
 
   <string name="status_starting"
@@ -144,7 +142,7 @@
 
   <string name="explanation_starting"
           description="Corresponds to status_starting">
-    Hang tight.  Intra is establishing a server connection.
+    Hang tight. YuhadnsAPP is establishing a server connection.
   </string>
 
   <string name="status_waiting"
@@ -159,17 +157,16 @@
 
   <string name="explanation_offline"
           description="Status indicator shown when there is no network connection.">
-    Your device is offline.  Intra is waiting for a network connection.
+    Your device is offline. YuhadnsAPP is waiting for a network connection.
   </string>
 
   <string name="explanation_vpn"
           description="Warning text shown on the main screen before the user starts Intra">
-    Intra has detected another VPN on your device.  If you enable Intra, that VPN will be disabled.
-    Intra is not as secure as a trusted VPN.
+    YuhadnsAPP has detected another VPN on your device. If you enable YuhadnsAPP, that VPN will be disabled.
   </string>
 
   <string name="explanation_failing">
-    Warning: Queries are failing.  You may want to choose a different server or restart Intra.
+    Warning: Queries are failing. You may want to choose a different profile or restart YuhadnsAPP.
   </string>
 
   <string name="system_details"
@@ -188,8 +185,8 @@
   </string>
 
   <string name="num_requests_body">
-    This value shows the total number of DNS queries that your device has performed while Intra was
-    active.  Intra encrypts these queries and sends them to a trusted server to make sure you\'re
+    This value shows the total number of DNS queries that your device has performed while YuhadnsAPP was
+    active. YuhadnsAPP encrypts these queries and sends them to a trusted server to make sure you\'re
     getting authentic results.
   </string>
 
@@ -218,8 +215,8 @@
   </string>
 
   <string name="transport_body">
-    When you use Intra, your DNS queries are encrypted, so that only you and your DNS server can see
-    what DNS queries you are making.  Intra implements the DNS over HTTPS protocol for encryption.
+    When you use YuhadnsAPP, your DNS queries are encrypted, so that only you and your DNS server can see
+    what DNS queries you are making. YuhadnsAPP implements the DNS over HTTPS protocol for encryption.
   </string>
 
   <string name="default_transport_label"
@@ -271,9 +268,9 @@
   </string>
 
   <string name="insecure_server_body">
-    When Intra is disabled, most devices are pre-configured to use the DNS server your network
+    When YuhadnsAPP is disabled, most devices are pre-configured to use the DNS server your network
     operator picks. This field shows the IP address of the DNS server that your device is currently
-    using. With Intra or Android P, you can easily select a server of your choice.
+    using. With YuhadnsAPP or Android P, you can easily select a server of your choice.
   </string>
 
   <string name="strict_mode_server_headline">
@@ -282,7 +279,7 @@
 
   <string name="strict_mode_server_body">
     This field shows the name of the DNS server that you configured in Android\'s Private DNS
-    setting.  When Intra is disabled, your apps should send DNS queries to this server.
+    setting.  When YuhadnsAPP is disabled, your apps should send DNS queries to this server.
   </string>
 
   <string name="unknown_server"
@@ -390,13 +387,13 @@
 
   <string name="excluded_apps_summary"
           description="Summary of how the Excluded apps' setting works">
-    DNS queries from any selected apps will not go through Intra.  If an app appears to be
-    incompatible with Intra, you can add it here.
+    DNS queries from any selected apps will not go through YuhadnsAPP. If an app appears to be
+    incompatible with YuhadnsAPP, you can add it here.
   </string>
 
   <string name="excluded_apps_title"
           description="Title to appear over the 'Excluded apps' selection list.  Must be short.">
-    Mark apps to exclude from Intra
+    Mark apps to exclude from YuhadnsAPP
   </string>
 
   <string name="old_android"
@@ -424,7 +421,7 @@
   </string>
 
   <string name="warning_title" description="Status indicator text shown in a warning notification.">
-    Warning: Intra has been deactivated
+    Warning: YuhadnsAPP has been deactivated
   </string>
 
   <string name="warning_channel_name"
@@ -435,6 +432,6 @@
   <string name="warning_channel_description"
           description="This is the explanatory text describing the 'Warning' notification class.  It's
   only visible in the system's advanced notifications settings page.">
-    Shown when Intra has encountered a problem.
+    Shown when YuhadnsAPP has encountered a problem.
   </string>
 </resources>
