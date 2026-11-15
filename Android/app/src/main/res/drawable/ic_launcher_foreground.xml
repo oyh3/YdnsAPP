@@ -1,5 +1,4 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108.0"
@@ -9,28 +8,17 @@
     <path
         android:pathData="M54,16 C74.98,16 92,33.02 92,54 C92,74.98 74.98,92 54,92 C33.02,92 16,74.98 16,54 C16,33.02 33.02,16 54,16 Z"
         android:strokeWidth="1.5"
-        android:strokeColor="#2538BDF8"
+        android:strokeColor="#3338BDF8"
         android:fillColor="#00000000" />
 
-    <!-- Modern Security Shield with Midnight Gradient -->
+    <!-- Modern Security Shield -->
     <path
         android:pathData="M54,24 L78,34 C78,60 54,82 54,82 C54,82 30,60 30,34 Z"
         android:strokeWidth="2.5"
         android:strokeColor="#38BDF8"
         android:strokeLineCap="round"
-        android:strokeLineJoin="round">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:startX="54.0"
-                android:startY="24.0"
-                android:endX="54.0"
-                android:endY="82.0"
-                android:type="linear">
-                <item android:offset="0.0" android:color="#E61E293B" />
-                <item android:offset="1.0" android:color="#FA0B1120" />
-            </gradient>
-        </aapt:attr>
-    </path>
+        android:strokeLineJoin="round"
+        android:fillColor="#1E293B" />
 
     <!-- Stylized 'Y' DNS Core -->
     <path
@@ -39,29 +27,16 @@
         android:strokeColor="#38BDF8"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:fillColor="#00000000">
-        <aapt:attr name="android:strokeColor">
-            <gradient
-                android:startX="42.0"
-                android:startY="40.0"
-                android:endX="66.0"
-                android:endY="70.0"
-                android:type="linear">
-                <item android:offset="0.0" android:color="#60A5FA" />
-                <item android:offset="0.5" android:color="#38BDF8" />
-                <item android:offset="1.0" android:color="#34D399" />
-            </gradient>
-        </aapt:attr>
-    </path>
+        android:fillColor="#00000000" />
 
     <!-- Glowing Signal Nodes -->
     <path
-        android:pathData="M42,39m-2,0a2,2 0 1,1 4,0a2,2 0 1,1 -4,0"
+        android:pathData="M42,39m-2.5,0a2.5,2.5 0 1,1 5,0a2.5,2.5 0 1,1 -5,0"
         android:fillColor="#60A5FA" />
     <path
-        android:pathData="M66,39m-2,0a2,2 0 1,1 4,0a2,2 0 1,1 -4,0"
+        android:pathData="M66,39m-2.5,0a2.5,2.5 0 1,1 5,0a2.5,2.5 0 1,1 -5,0"
         android:fillColor="#60A5FA" />
     <path
-        android:pathData="M54,71m-2,0a2,2 0 1,1 4,0a2,2 0 1,1 -4,0"
+        android:pathData="M54,71m-2.5,0a2.5,2.5 0 1,1 5,0a2.5,2.5 0 1,1 -5,0"
         android:fillColor="#34D399" />
 </vector>
