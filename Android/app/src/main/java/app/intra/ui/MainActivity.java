@@ -217,8 +217,6 @@ public class MainActivity extends AppCompatActivity
     intentFilter.addAction(InternalNames.DNS_STATUS.name());
     LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, intentFilter);
 
-    prepareHyperlinks(this, findViewById(R.id.activity_main));
-
     // Autostart if necessary
     maybeAutostart();
   }
@@ -863,23 +861,6 @@ public class MainActivity extends AppCompatActivity
 
     TextView body = view.findViewById(R.id.info_body);
     body.setText(page.body);
-  }
-
-  // Hyperlinks need to be filled in whenever the layout is instantiated.
-  private static void prepareHyperlinks(Activity activity, View view) {
-    if (view == null) {
-      return;
-    }
-    // Enable hyperlinks
-    int[] idsToLink = {
-        R.id.credit_text_view
-    };
-    for (int id : idsToLink) {
-      TextView textView = (TextView) view.findViewById(id);
-      if (textView != null) {
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-      }
-    }
   }
 
   private void getIntroApproval() {
