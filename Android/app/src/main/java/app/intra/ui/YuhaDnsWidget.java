@@ -24,7 +24,7 @@ import app.intra.sys.VpnState;
  */
 public class YuhaDnsWidget extends AppWidgetProvider {
 
-  public static final String ACTION_TOGGLE_VPN = "app.intra.widget.ACTION_TOGGLE_VPN";
+  public static final String ACTION_TOGGLE_VPN = "com.yuha.dns.widget.ACTION_TOGGLE_VPN";
 
   @Override
   public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

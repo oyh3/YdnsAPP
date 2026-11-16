@@ -282,7 +282,7 @@ func splitHello(hello []byte, w io.Writer) (n int, splitLen int, err error) {
 
 	pkt = hello[splitLen-5:]
 	copy(pkt, hello[:5])
- 	binary.BigEndian.PutUint16(pkt[3:5], recordLen-uint16(recordSplitLen))
+	binary.BigEndian.PutUint16(pkt[3:5], recordLen-uint16(recordSplitLen))
 	var m int
 	m, err = w.Write(pkt)
 	n += m
@@ -323,7 +323,7 @@ func (r *retrier) Write(b []byte) (int, error) {
 			// by the retry procedure.  Block until we have a final socket (which will
 			// already have replayed b[:n]), and retry.
 			<-r.retryCompleteFlag
-	
+
 			r.mutex.Lock()
 			c := r.conn
 			r.mutex.Unlock()

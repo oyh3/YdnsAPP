@@ -65,7 +65,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
       List<ApplicationInfo> infos = pm.getInstalledApplications(0);
       ArrayList<AppInfo> entries = new ArrayList<>(infos.size());
       for (ApplicationInfo info : infos) {
-        if ("app.intra".equals(info.packageName)) {
+        if ("app.intra".equals(info.packageName) || "com.yuha.dns".equals(info.packageName)) {
           // Showing ourselves in the list of apps would be confusing and useless.
           continue;
         }

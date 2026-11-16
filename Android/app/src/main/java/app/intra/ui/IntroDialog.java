@@ -50,7 +50,7 @@ public class IntroDialog extends DialogFragment {
   private static boolean isShown = false;
 
   static boolean shouldShow(Activity activity) {
-    return !isShown && !PersistentState.getWelcomeApproved(activity);
+    return false;
   }
 
   @Override

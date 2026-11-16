@@ -1,108 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                           xmlns:app="http://schemas.android.com/apk/res-auto"
-                                           xmlns:tools="http://schemas.android.com/tools"
-                                           android:id="@+id/activity_main"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="match_parent"
-                                           android:fitsSystemWindows="true"
-                                           tools:openDrawer="left">
-
-  <LinearLayout
+  <include
+      layout="@layout/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical">
+      android:layout_height="wrap_content"/>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
     <include
-        layout="@layout/toolbar"
+        android:id="@+id/frame_main"
+        layout="@layout/main_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:visibility="visible"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <include
+        android:id="@+id/settings"
+        layout="@layout/placeholder"
+        android:visibility="gone"/>
 
-      <include
-          android:id="@+id/frame_main"
-          layout="@layout/main_recycler"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:visibility="visible"/>
+    <include
+        android:id="@+id/info_page"
+        layout="@layout/info_page"
+        android:visibility="gone"/>
+  </FrameLayout>
 
-      <include
-          android:id="@+id/settings"
-          layout="@layout/placeholder"
-          android:visibility="gone"/>
-
-      <include
-          android:id="@+id/info_page"
-          layout="@layout/info_page"
-          android:visibility="gone"/>
-    </FrameLayout>
-  </LinearLayout>
-
-  <!-- The NavigationView class supports a header, but not a footer.  To produce the desired footer
-  behavior, we use an outer NavigationView that has no menu, but contains a scrollview that
-  holds a constraint chain: the real navigation view, a spacer, and the footer elements. -->
-  <app.intra.ui.PadNavigationView
-          android:id="@+id/outer_drawer"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:fitsSystemWindows="true"
-          android:layout_gravity="start">
-
-    <androidx.core.widget.NestedScrollView
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:scrollbars="vertical" android:fillViewport="true">
-
-      <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                         android:layout_height="match_parent">
-
-        <com.google.android.material.navigation.NavigationView
-                android:id="@+id/drawer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="fill_vertical"
-                app:menu="@menu/drawer_menu"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/nav_space"/>
-
-        <Space
-                android:id="@+id/nav_space"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/drawer"
-                app:layout_constraintBottom_toTopOf="@id/credit_text_view"/>
-
-        <TextView
-                android:id="@+id/credit_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:linksClickable="true"
-                android:text="@string/credits_text"
-                app:layout_constraintTop_toBottomOf="@id/nav_space"
-                app:layout_constraintBottom_toTopOf="@id/nav_image"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
-
-        <ImageView
-                android:id="@+id/nav_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:ignore="ContentDescription"
-                android:scaleType="fitCenter"
-                app:layout_constraintTop_toBottomOf="@id/credit_text_view"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:adjustViewBounds="true"/>
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-  </app.intra.ui.PadNavigationView>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</LinearLayout>

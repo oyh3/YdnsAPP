@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:80496146927:android:755859391e691a80",
         "android_client_info": {
-          "package_name": "app.intra"
+          "package_name": "com.yuha.dns"
         }
       },
       "oauth_client": [

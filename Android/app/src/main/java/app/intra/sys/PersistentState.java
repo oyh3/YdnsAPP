@@ -161,7 +161,7 @@ public class PersistentState {
   }
 
   public static boolean getWelcomeApproved(Context context) {
-    return getApprovalSettings(context).getBoolean(APPROVED_KEY, false);
+    return true;
   }
 
   public static void setWelcomeApproved(Context context, boolean approved) {

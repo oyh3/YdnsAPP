@@ -41,6 +41,7 @@ import android.os.SystemClock;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,14 +57,11 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
 import androidx.core.widget.ImageViewCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -82,7 +80,6 @@ import app.intra.sys.VpnState;
 import app.intra.sys.firebase.RemoteConfig;
 import app.intra.ui.settings.ServerApprovalDialogFragment;
 import app.intra.ui.settings.SettingsFragment;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.net.InetAddress;
@@ -102,7 +99,6 @@ public class MainActivity extends AppCompatActivity
   private static final int REQUEST_CODE_PREPARE_VPN = 100;
   public static final int RESULT_OK = -1;
 
-  private ActionBarDrawerToggle drawerToggle;
   private RecyclerView recyclerView;
   private RecyclerAdapter adapter;
   private RecyclerView.LayoutManager layoutManager;
@@ -195,59 +191,17 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
-    // Set up the drawer toggle
-    DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
-    drawerToggle = new ActionBarDrawerToggle(
-        this,                  /* host Activity */
-        drawerLayout,         /* DrawerLayout object */
-        toolbar,
-        R.string.drawer_open,  /* "open drawer" description */
-        R.string.drawer_close  /* "close drawer" description */
-    );
-    drawerLayout.addDrawerListener(drawerToggle);
-
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setHomeButtonEnabled(true);
-
-    drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        chooseView(R.id.frame_main);
-      }
-    });
-
-    // Set up the drawer
-    NavigationView drawer = (NavigationView) findViewById(R.id.drawer);
-    drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-      @Override
-      public boolean onNavigationItemSelected(MenuItem item) {
-        // Resource IDs are not compile-time constants, so they cannot be used
-        // as switch labels.
-        final int itemId = item.getItemId();
-        // "up" and "home" are declared by AppCompat, not by this app, so with
-        // non-transitive R classes they are not part of app.intra.R.
-        if (itemId == androidx.appcompat.R.id.up || itemId == androidx.appcompat.R.id.home) {
-          chooseView(R.id.frame_main);
-          return true;
-        } else if (itemId == R.id.settings) {
-          chooseView(R.id.settings);
-          return true;
-        } else if (itemId == R.id.support) {
-          openUrl("https://dns.ohyh2016.workers.dev/");
-          return true;
-        } else if (itemId == R.id.privacy) {
-          openUrl("https://dns.ohyh2016.workers.dev/");
-          return true;
-        } else if (itemId == R.id.tos) {
-          openUrl("https://dns.ohyh2016.workers.dev/");
-          return true;
-        } else if (itemId == R.id.source_code) {
-          openUrl("https://github.com/oyh3/YdnsAPP");
-          return true;
+    // Set up top-left action (Info / About on home screen)
+    if (toolbar != null) {
+      toolbar.setNavigationIcon(R.drawable.ic_info_white);
+      toolbar.setNavigationContentDescription(R.string.action_info);
+      toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          showInfo(InfoPage.SECURE_SERVER);
         }
-        return false;
-      }
-    });
+      });
+    }
 
     // Set up the recycler
     recyclerView = (RecyclerView) findViewById(R.id.recycler);
@@ -420,8 +374,6 @@ public class MainActivity extends AppCompatActivity
   @Override
   protected void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    // Sync the toggle state after onRestoreInstanceState has occurred.
-    drawerToggle.syncState();
   }
 
   @Override
@@ -767,6 +719,28 @@ public class MainActivity extends AppCompatActivity
         .commitNow();
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main_toolbar_menu, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+    if (id == R.id.action_settings) {
+      chooseView(R.id.settings);
+      return true;
+    } else if (id == R.id.action_info) {
+      showInfo(InfoPage.SECURE_SERVER);
+      return true;
+    } else if (id == android.R.id.home) {
+      chooseView(R.id.frame_main);
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
   private View chooseView(int id) {
     View home = findViewById(R.id.frame_main);
     View settings = findViewById(R.id.settings);
@@ -779,24 +753,28 @@ public class MainActivity extends AppCompatActivity
     selected.setVisibility(View.VISIBLE);
 
     ActionBar actionBar = getSupportActionBar();
+    Toolbar toolbar = findViewById(R.id.toolbar);
     if (id == R.id.frame_main) {
       actionBar.setTitle(R.string.app_name);
+      if (toolbar != null) {
+        toolbar.setNavigationIcon(R.drawable.ic_info_white);
+        toolbar.setNavigationContentDescription(R.string.action_info);
+        toolbar.setNavigationOnClickListener(v -> showInfo(InfoPage.SECURE_SERVER));
+      }
     } else if (id == R.id.settings) {
       actionBar.setTitle(R.string.settings);
       showSettings();
-    }
-
-    // Close the drawer
-    DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
-    drawerLayout.closeDrawer(GravityCompat.START);
-
-    // Show an arrow on non-home screens.  See https://stackoverflow.com/questions/27742074
-    if (id == R.id.frame_main) {
-      drawerToggle.setDrawerIndicatorEnabled(true);
-    } else {
-      actionBar.setDisplayHomeAsUpEnabled(false);
-      drawerToggle.setDrawerIndicatorEnabled(false);
-      actionBar.setDisplayHomeAsUpEnabled(true);
+      if (toolbar != null) {
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
+        toolbar.setNavigationContentDescription(R.string.home);
+        toolbar.setNavigationOnClickListener(v -> chooseView(R.id.frame_main));
+      }
+    } else if (id == R.id.info_page) {
+      if (toolbar != null) {
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
+        toolbar.setNavigationContentDescription(R.string.home);
+        toolbar.setNavigationOnClickListener(v -> chooseView(R.id.frame_main));
+      }
     }
 
     // Intercept back only on the screens the arrow points away from.  On the home view the
@@ -889,13 +867,18 @@ public class MainActivity extends AppCompatActivity
 
   // Hyperlinks need to be filled in whenever the layout is instantiated.
   private static void prepareHyperlinks(Activity activity, View view) {
+    if (view == null) {
+      return;
+    }
     // Enable hyperlinks
     int[] idsToLink = {
         R.id.credit_text_view
     };
     for (int id : idsToLink) {
       TextView textView = (TextView) view.findViewById(id);
-      textView.setMovementMethod(LinkMovementMethod.getInstance());
+      if (textView != null) {
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+      }
     }
   }
 

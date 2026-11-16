@@ -59,6 +59,8 @@
     Settings
   </string>
 
+  <string name="action_info">Info</string>
+
   <string name="support"
           description="Menu entry that links to documentation and interactive support.">
     Support

@@ -12,6 +12,7 @@
   <string name="drawer_close">탐색 창 닫기</string>
   <string name="home">홈</string>
   <string name="settings">설정</string>
+  <string name="action_info">정보</string>
   <string name="support">지원 및 안내</string>
   <string name="privacy_link">개인정보처리방침</string>
   <string name="tos_link">이용 약관</string>
